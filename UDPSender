@@ -1,0 +1,28 @@
+import java.net.*;
+import java.io.*;
+
+public class UDPSender {
+
+	public static void main(String[] args)
+	{
+		try
+		{
+			DatagramSocket ds = new DatagramSocket(5555);
+			String str = "Welcome to Kadi Sarvavishwavidhyalaya UNIVERSITY";
+			InetAddress ip = InetAddress.getByName("localhost");
+			DatagramPacket dp = new DatagramPacket(str.getBytes(),str.length(),ip,6666);
+			ds.send(dp);
+			
+			byte buffer[] = new byte[1024];
+			DatagramPacket dp1 = new DatagramPacket(buffer,1024);
+			ds.receive(dp1);
+			String str11 = new String(dp1.getData(),0,dp1.getLength());
+			System.out.println("Message from Receiver: "+str11);
+			ds.close();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+	}
+}
